@@ -24,7 +24,7 @@ import com.gammas.game.models.Tile;
 /**
  * @author James Carter
  *
- * @author Charles Day
+ * @author Charles Day Again
  */
 public class Tiles {
 

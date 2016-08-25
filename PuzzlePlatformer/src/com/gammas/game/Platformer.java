@@ -65,7 +65,7 @@ public class Platformer extends Canvas {
 			}
 		});
 
-		addKeyListener(arg0);
+		//addKeyListener(arg0);
 		
 		requestFocus();
 

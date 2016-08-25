@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.gammas.game.controllers.WorldController;
+import com.gammas.game.utils.Tiles;
 
 public class Platformer extends Canvas {
 	/**
@@ -36,6 +37,8 @@ public class Platformer extends Canvas {
 	public Platformer() throws IOException {
 
 		instance = this;
+		Tiles.GeneratePrototypes();
+		Tiles.ReadFromXML("tiles.xml");
 		worldController = new WorldController(60, 34);
 
 		frame = new JFrame("Utopia Sim - v0.01a");

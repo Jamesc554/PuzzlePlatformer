@@ -7,5 +7,6 @@ public class References {
 	public static final String TileSpriteLocation = "Assets/Sprites/Tiles/";
 	public static final String LevelFileLocation = "Assets/Levels/";
 	public static final String EntitySpriteLocation = "Assets/Sprites/Entities/";
+	public static final String XMLFileLocation = "Assets/XML/";
 	
 }

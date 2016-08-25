@@ -6,25 +6,34 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.gammas.game.utils.References;
+
 public class GameObject {
 
 	public int x, y;
 	public int width, height;
 	public Sprite sprite;
 	public String name = "air";
+	public String imageFileName;
 
-	public GameObject(int _x, int _y, int _width, int _height, String imageFileName) {
+	public GameObject(int _x, int _y, int _width, int _height, String _imageFileName) {
 		x = _x;
 		y = _y;
 		width = _width;
 		height = _height;
 		try {
-			sprite = new Sprite(ImageIO.read(new File(imageFileName)));
+			sprite = new Sprite(ImageIO.read(new File(_imageFileName)));
 		} catch (IOException e) {
-			System.err.println("Failed to load: " + imageFileName);
+			try {
+				sprite = new Sprite(ImageIO.read(new File(References.TileSpriteLocation + "Error.png")));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			System.err.println("Failed to load: " + _imageFileName);
 		}
 
-		name = imageFileName.substring(0, imageFileName.length() - 4);
+		imageFileName = _imageFileName;
+		name = imageFileName.substring(21, imageFileName.length() - 4);
 		System.out.println(name);
 	}
 

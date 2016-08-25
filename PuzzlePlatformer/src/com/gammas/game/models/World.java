@@ -10,6 +10,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import com.gammas.game.utils.References;
+import com.gammas.game.utils.Tiles;
 
 public class World {
 
@@ -31,7 +32,10 @@ public class World {
 		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				tiles[x][y] = new Tile(x, y, 32, 32, References.TileSpriteLocation + GetTileFromColour(level[x][y]));
+				Tile newTile = Tiles.GetTile(GetTileFromColour(level[x][y]));
+				newTile.x = x;
+				newTile.y = y;
+				tiles[x][y] = newTile;
 			}
 		}
 	}
@@ -65,19 +69,19 @@ public class World {
 		tiles[x][y] = tile;
 	}
 
-	public String GetTileFromColour(Color color) {
+	public int GetTileFromColour(Color color) {
 		if (color.getRed() == 255 && color.getGreen() == 255 && color.getBlue() == 255)
-			return "Air.png";
+			return 0;
 		
 		if (color.getRed() == 0 && color.getGreen() == 255 && color.getBlue() == 0)
-			return "Grass.png";
+			return 2;
 		
 		if (color.getRed() == 255 && color.getGreen() == 0 && color.getBlue() == 0)
-			return "Brick.png";
+			return 3;
 
 		System.err.println("Unable to find a Tile matching R: " + color.getRed() + " G: " + color.getGreen() + " B: "
 				+ color.getBlue());
-		return "Error.png";
+		return 1;
 	}
 
 }

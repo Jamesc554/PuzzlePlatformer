@@ -3,6 +3,7 @@
  */
 package com.gammas.game.utils;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,20 +29,24 @@ public class Tiles {
 
 	private static List<Tile> tiles = new ArrayList<Tile>();
 	private static Map<String, Integer> tileIdDic = new HashMap<String, Integer>();
+	private static Map<Color, Integer> tileColorDic = new HashMap<Color, Integer>();
 
 	public static void GeneratePrototypes() {
 
-		//AddTile(new Tile(32, 32, References.TileSpriteLocation + "Air.png"));
-		//AddTile(new Tile(32, 32, References.TileSpriteLocation + "Error.png"));
-		//AddTile(new Tile(32, 32, References.TileSpriteLocation + "Grass.png"));
-		//AddTile(new Tile(32, 32, References.TileSpriteLocation + "Brick.png"));
+		// AddTile(new Tile(32, 32, References.TileSpriteLocation + "Air.png"));
+		// AddTile(new Tile(32, 32, References.TileSpriteLocation +
+		// "Error.png"));
+		// AddTile(new Tile(32, 32, References.TileSpriteLocation +
+		// "Grass.png"));
+		// AddTile(new Tile(32, 32, References.TileSpriteLocation +
+		// "Brick.png"));
 	}
 
-	public static void ReadFromXML(String filePath) {
+	public static void ReadFromXML(String filePath, String spriteFilePath) {
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder dBuilder = builderFactory.newDocumentBuilder();
-			Document document = dBuilder.parse(References.XMLFileLocation + filePath);
+			Document document = dBuilder.parse(filePath);
 			document.normalize();
 
 			NodeList rootNodes = document.getElementsByTagName("tiles");
@@ -53,14 +58,14 @@ public class Tiles {
 
 				String tileFilePath = References.TileSpriteLocation + "Error.png";
 
-				if (tile.getAttribute("spriteLocation") != "") {
-					tileFilePath = tile.getAttribute("spriteLocation") + tile.getAttribute("spriteFile");
-				} else {
-					tileFilePath = References.TileSpriteLocation + tile.getAttribute("spriteFile");
-				}
+				tileFilePath = spriteFilePath + tile.getAttribute("spriteLocation") + tile.getAttribute("spriteFile");
 
-				Tile newTile = new Tile(Integer.parseInt(tile.getAttribute("width")), Integer.parseInt(tile.getAttribute("height")), tileFilePath);
-				AddTile(newTile);
+				Tile newTile = new Tile(Integer.parseInt(tile.getAttribute("width")),
+						Integer.parseInt(tile.getAttribute("height")), tileFilePath);
+				Color color = new Color(Integer.parseInt(tile.getAttribute("R")),
+						Integer.parseInt(tile.getAttribute("G")), Integer.parseInt(tile.getAttribute("B")));
+
+				AddTile(newTile, color);
 			}
 
 		} catch (SAXException e) {
@@ -72,8 +77,9 @@ public class Tiles {
 		}
 	}
 
-	public static void AddTile(Tile tile) {
+	public static void AddTile(Tile tile, Color color) {
 		tileIdDic.put(tile.name, tiles.size());
+		tileColorDic.put(color, tiles.size());
 		tiles.add(tile);
 	}
 
@@ -85,6 +91,12 @@ public class Tiles {
 
 	public static Tile GetTile(int tileId) {
 		Tile oldTile = tiles.get(tileId);
+		Tile newTile = new Tile(oldTile.width, oldTile.height, oldTile.imageFileName);
+		return newTile;
+	}
+
+	public static Tile GetTile(Color color) {
+		Tile oldTile = tiles.get(tileColorDic.get(color));
 		Tile newTile = new Tile(oldTile.width, oldTile.height, oldTile.imageFileName);
 		return newTile;
 	}

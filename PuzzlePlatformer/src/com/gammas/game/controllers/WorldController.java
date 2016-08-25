@@ -8,12 +8,14 @@ public class WorldController {
 	public World world;
 	public int worldSizeX, worldSizeY;
 
-	public WorldController(int tilesX, int tilesY) {
-		world = new World(tilesX, tilesY, "testLevel");
-		world.CreateWorld();
-
-		worldSizeX = tilesX;
-		worldSizeY = tilesY;
+	public WorldController() {
+		
+	}
+	
+	public void SetWorld(World _world){
+		world = _world;
+		worldSizeX = _world.width;
+		worldSizeY = _world.height;
 	}
 
 	public void update(double deltaTime) {
@@ -29,6 +31,7 @@ public class WorldController {
 	}
 
 	public void draw(Graphics g) {
+
 		for (int x = 0; x < worldSizeX; x++) {
 			for (int y = 0; y < worldSizeY; y++) {
 				world.GetTileAt(x, y).draw(g);

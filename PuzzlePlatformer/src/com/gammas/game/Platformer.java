@@ -8,13 +8,17 @@ import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.gammas.game.controllers.WorldController;
-import com.gammas.game.utils.Tiles;
+import com.gammas.game.models.World;
+import com.gammas.game.utils.Mod;
 
 public class Platformer extends Canvas {
 	/**
@@ -33,13 +37,15 @@ public class Platformer extends Canvas {
 
 	public WorldController worldController;
 	public static Platformer instance;
+	
+	public List<Mod> mods;
 
 	public Platformer() throws IOException {
 
 		instance = this;
-		Tiles.GeneratePrototypes();
-		Tiles.ReadFromXML("tiles.xml");
-		worldController = new WorldController(60, 34);
+		mods = LoadMods();
+		worldController = new WorldController();
+		worldController.SetWorld(mods.get(0).levels.get(0));
 
 		frame = new JFrame("Utopia Sim - v0.01a");
 
@@ -114,6 +120,24 @@ public class Platformer extends Canvas {
 
 	public void render(Graphics g) {
 		worldController.draw(g);
+	}
+	
+	public List<Mod> LoadMods(){
+		List<Mod> mods = new ArrayList<Mod>();
+		
+		File folder = new File("Assets");
+		File[] files = folder.listFiles();
+		
+		for (int i = 0; i < files.length; i++){
+			if (files[i].isDirectory()){
+				Mod newMod = new Mod(files[i].getPath());
+				System.out.println("Mod Path: " + files[i].getPath());
+				mods.add(newMod);
+			}
+		}
+		
+		System.out.println("Amount of mods loaded: " + mods.size());
+		return mods;
 	}
 
 }

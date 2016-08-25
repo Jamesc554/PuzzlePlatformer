@@ -13,26 +13,25 @@ import com.gammas.game.utils.References;
 import com.gammas.game.utils.Tiles;
 
 public class World {
-
-	public int width, height;
+	
 	private Tile[][] tiles;
 	private Color[][] level;
 	public List<GameObject> gameObjects = new ArrayList<GameObject>();
 	public String levelName;
+	public File levelFile;
+	public int width, height;
 
-	public World(int _width, int _height, String _levelName) {
-		width = _width;
-		height = _height;
+	public World(File _levelFile, String _levelName) {
 		levelName = _levelName;
+		levelFile = _levelFile;
 	}
 
 	public void CreateWorld() {
-		tiles = new Tile[width][height];
 		level = LoadLevel();
 		
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				Tile newTile = Tiles.GetTile(GetTileFromColour(level[x][y]));
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles[0].length; y++) {
+				Tile newTile = Tiles.GetTile((level[x][y]));
 				newTile.x = x;
 				newTile.y = y;
 				tiles[x][y] = newTile;
@@ -44,13 +43,16 @@ public class World {
 		BufferedImage image = null;
 		
 		try {
-			image = ImageIO.read(new File(References.LevelFileLocation + levelName + ".png"));
+			image = ImageIO.read(levelFile);
 		} catch (IOException e) {
 			System.err.println("Failed to load: " + levelName + ".png");
 			System.exit(1);
 		}
 
 		Color[][] tempArray = new Color[image.getWidth()][image.getHeight()];
+		tiles = new Tile[image.getWidth()][image.getHeight()];
+		width = image.getWidth();
+		height = image.getHeight();
 				
 		for (int x = 0; x < image.getWidth(); x++){
 			for (int y = 0; y < image.getHeight(); y++){
@@ -67,21 +69,6 @@ public class World {
 
 	public void SetTile(int x, int y, Tile tile) {
 		tiles[x][y] = tile;
-	}
-
-	public int GetTileFromColour(Color color) {
-		if (color.getRed() == 255 && color.getGreen() == 255 && color.getBlue() == 255)
-			return 0;
-		
-		if (color.getRed() == 0 && color.getGreen() == 255 && color.getBlue() == 0)
-			return 2;
-		
-		if (color.getRed() == 255 && color.getGreen() == 0 && color.getBlue() == 0)
-			return 3;
-
-		System.err.println("Unable to find a Tile matching R: " + color.getRed() + " G: " + color.getGreen() + " B: "
-				+ color.getBlue());
-		return 1;
 	}
 
 }

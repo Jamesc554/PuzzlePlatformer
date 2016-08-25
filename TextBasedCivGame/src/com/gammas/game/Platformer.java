@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import com.gammas.game.controllers.WorldController;
 
-public class Utopia extends Canvas {
+public class Platformer extends Canvas {
 	/**
 	 * 
 	 */
@@ -31,9 +31,9 @@ public class Utopia extends Canvas {
 	public long lastFpsTime;
 
 	public WorldController worldController;
-	public static Utopia instance;
+	public static Platformer instance;
 
-	public Utopia() throws IOException {
+	public Platformer() throws IOException {
 
 		instance = this;
 		worldController = new WorldController(60, 34);

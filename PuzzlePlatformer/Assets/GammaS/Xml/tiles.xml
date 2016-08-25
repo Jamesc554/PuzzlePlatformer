@@ -5,4 +5,5 @@
 	<tile width="32" height="32" spriteLocation="Tiles/" spriteFile="Error.png" R="1" G="1" B="1"></tile>
 	<tile width="32" height="32" spriteLocation="Tiles/" spriteFile="Grass.png" R="0" G="255" B="0"></tile>
 	<tile width="32" height="32" spriteLocation="Tiles/" spriteFile="Brick.png" R="255" G="0" B="0"></tile>
+	<tile width="32" height="32" spriteLocation="Tiles/" spriteFile="Tile.png" R="0" G="0" B="255"></tile>
 </tiles>

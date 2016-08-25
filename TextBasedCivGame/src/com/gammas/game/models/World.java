@@ -71,6 +71,9 @@ public class World {
 		
 		if (color.getRed() == 0 && color.getGreen() == 255 && color.getBlue() == 0)
 			return "Grass.png";
+		
+		if (color.getRed() == 255 && color.getGreen() == 255 && color.getBlue() == 0)
+			return "Error.png";
 
 		System.err.println("Unable to find a Tile matching R: " + color.getRed() + " G: " + color.getGreen() + " B: "
 				+ color.getBlue());

@@ -1,6 +1,7 @@
 package com.gammas.game.models;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,12 +34,17 @@ public class GameObject {
 		}
 
 		imageFileName = _imageFileName;
-		name = imageFileName.substring(21, imageFileName.length() - 4);
+		name = imageFileName.substring(28, imageFileName.length() - 4);
 		System.out.println(name);
 	}
 
+	public void KeyPressed(KeyEvent e){
+	}
+	
+	public void KeyReleased(KeyEvent e){
+	}
+	
 	public void update(double deltaTime) {
-
 	}
 
 	public void draw(Graphics g) {

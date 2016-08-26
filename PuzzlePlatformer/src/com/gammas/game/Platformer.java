@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -17,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.gammas.game.controllers.WorldController;
-import com.gammas.game.models.World;
+import com.gammas.game.utils.KeyInputHandler;
 import com.gammas.game.utils.Mod;
 
 public class Platformer extends Canvas {
@@ -65,7 +66,7 @@ public class Platformer extends Canvas {
 			}
 		});
 
-		//addKeyListener(arg0);
+		addKeyListener(new KeyInputHandler(this));
 		
 		requestFocus();
 
@@ -116,6 +117,14 @@ public class Platformer extends Canvas {
 		}
 	}
 
+	public void KeyPressed(KeyEvent e){
+		worldController.KeyPressed(e);
+	}
+	
+	public void KeyReleased(KeyEvent e){
+		worldController.KeyReleased(e);
+	}
+	
 	public void tick(double deltaTime) {
 		worldController.update(deltaTime);
 	}
